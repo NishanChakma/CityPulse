@@ -7,13 +7,13 @@ import AuthNavigator from './AuthNavigator';
 const Stack = createStackNavigator();
 
 const RootNavigation = () => {
-  const isLogin = false;
+  const isLogin = true;
 
   return (
     <NavigationContainer
       theme={{
         ...DarkTheme,
-        colors: { ...DarkTheme.colors, background: '#000000ff' },
+        colors: { ...DarkTheme.colors, background: '#ffffffff' },
       }}
     >
       <Stack.Navigator

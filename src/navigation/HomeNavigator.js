@@ -7,16 +7,15 @@ const Stack = createStackNavigator();
 
 const HomeNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={AppRoutes.HOMESCREEN}
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      screenOptions={() => ({
+        headerShown: false,
+      })}
+    >
+      <Stack.Screen name={AppRoutes.HOMESCREEN} component={HomeScreen} />
       <Stack.Screen
         name={AppRoutes.EVENTDETAILSSCREEN}
         component={EventDetailsScreen}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
