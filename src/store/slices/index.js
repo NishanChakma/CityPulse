@@ -1,9 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authSlice from './authSlice';
+import eventSlice from './eventSlice';
 
 const allReducers = combineReducers({
   auth: authSlice,
-  // favourite: favouriteSlice,
+  event: eventSlice,
 });
 
 const reducers = (state, action) => {
