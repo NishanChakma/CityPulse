@@ -4,15 +4,15 @@ import colors from '../utills/colors';
 
 const ProfileCard = ({ logo, title, onPress, style }) => {
   return (
-    <View style={[styles.card, style]}>
-      <View style={styles.innerCard}>
-        <Image source={logo} style={styles.glob} />
-        <Text style={styles.lang}>{title}</Text>
-      </View>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={[styles.card, style]}>
+        <View style={styles.innerCard}>
+          <Image source={logo} style={styles.glob} />
+          <Text style={styles.lang}>{title}</Text>
+        </View>
         <Image source={rightArrow} style={styles.rightArrow} />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
