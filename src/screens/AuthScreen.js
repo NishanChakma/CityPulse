@@ -22,6 +22,7 @@ import {
 } from '@react-native-firebase/auth';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../store/slices/authSlice';
+import Loading from '../components/Loading';
 
 const AuthScreen = () => {
   const navigation = useNavigation();
@@ -29,8 +30,8 @@ const AuthScreen = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test@gmail.com');
+  const [password, setPassword] = useState('123456');
   const [loading, setLoading] = useState(false);
 
   // ✅ Unified handler for Login & Signup
@@ -137,6 +138,7 @@ const AuthScreen = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+      {loading && <Loading />}
       <ScrollView
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
