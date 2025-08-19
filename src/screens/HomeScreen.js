@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import Header from '../components/Header';
 import colors from '../utills/colors';
@@ -7,7 +7,7 @@ import EventList from '../components/EventList';
 
 const HomeScreen = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header />
       <Text style={styles.text}>
         Discover{' '}
@@ -18,7 +18,7 @@ const HomeScreen = () => {
       </Text>
       <SearchView />
       <EventList />
-    </View>
+    </ScrollView>
   );
 };
 

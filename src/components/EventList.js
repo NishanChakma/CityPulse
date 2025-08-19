@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import colors from '../utills/colors';
 import demo from '../assests/demo.png';
@@ -52,6 +59,17 @@ const EventList = () => {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
+
+      {/* <FlatList
+        data={DATA}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Text style={{ color: '#fff' }}>{item.title}</Text>
+          </View>
+        )}
+        scrollEnabled={false} // 🔑 Prevent FlatList from scrolling
+      /> */}
     </View>
   );
 };
@@ -86,6 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignItems: 'center',
     overflow: 'hidden',
+    marginBottom: 10,
   },
   mid: {
     overflow: 'hidden',
