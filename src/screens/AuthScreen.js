@@ -26,14 +26,14 @@ import Loading from '../components/Loading';
 import { useTranslation } from 'react-i18next';
 
 const AuthScreen = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('test@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   // ✅ Unified handler for Login & Signup

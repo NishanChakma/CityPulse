@@ -14,8 +14,10 @@ import { logoutAction } from '../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
 import LanguageModal from '../components/modal/LanguageModal';
+import { useTranslation } from 'react-i18next';
 
 const ProfileScreen = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(state => state?.auth?.userInfo);
@@ -45,20 +47,20 @@ const ProfileScreen = () => {
       {userInfo?.email && <Text style={styles.email}>{userInfo.email}</Text>}
 
       <View style={{ padding: 10 }}>
-        <Text style={styles.preference}>Preference</Text>
+        <Text style={styles.preference}>{t('Preference')}</Text>
         <ProfileCard
           logo={glob}
-          title="Language"
+          title={t('language')}
           onPress={() => setlanguageModal(true)}
         />
         <ProfileCard
           logo={fingerprint}
-          title="Biometric Login"
+          title={t('Biometric')}
           onPress={() => ShowMessage('Future Scope', true)}
         />
         <ProfileCard
           logo={logout}
-          title="Logout"
+          title={t('Logout')}
           onPress={() => handleLogout(true)}
           style={{ marginTop: 50 }}
         />

@@ -9,8 +9,10 @@ import Loading from './Loading';
 import API from '../services/api';
 import ShowMessage from './ShowMessage';
 import { setEvents } from '../store/slices/eventSlice';
+import { useTranslation } from 'react-i18next';
 
 const SearchScreen = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [form, setForm] = useState({ query: '', city: '' });
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ const SearchScreen = () => {
       {/* Event Search Input */}
       <InputField
         icon={searchIcon}
-        placeholder="Search events, concerts, sports"
+        placeholder={t('searchEvents')}
         value={form.query}
         onChangeText={text => handleChange('query', text)}
       />
@@ -62,14 +64,14 @@ const SearchScreen = () => {
       {/* City Search Input */}
       <InputField
         icon={locationIcon}
-        placeholder="Search your city"
+        placeholder={t('searchCity')}
         value={form.city}
         onChangeText={text => handleChange('city', text)}
       />
 
       <PrimaryButton
         onPress={fetchData}
-        title="Search Events"
+        title={t('search')}
         logo={searchIcon}
       />
     </View>

@@ -4,8 +4,10 @@ import styles from './styles';
 import openMaps from '../../assests/openMaps.png';
 import { useSelector } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
+import { useTranslation } from 'react-i18next';
 
 const MapsView = () => {
+  const { t } = useTranslation();
   const event = useSelector(state => state.event.currentEvent);
   const latitude = event?._embedded?.venues?.[0]?.location?.latitude;
   const longitude = event?._embedded?.venues?.[0]?.location?.longitude;
@@ -18,14 +20,14 @@ const MapsView = () => {
   if (!latitude || !longitude) {
     return (
       <View style={styles.container}>
-        <Text style={styles.location}>Location not available</Text>
+        <Text style={styles.location}>{t('noLocation')}</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.location}>Location</Text>
+      <Text style={styles.location}>{t('Location')}</Text>
 
       <MapView
         style={{ height: 162, width: '100%', borderRadius: 4 }}
@@ -45,7 +47,7 @@ const MapsView = () => {
 
       <TouchableOpacity onPress={openGoogleMapsApp} style={styles.mapsButton}>
         <Image source={openMaps} style={{ height: 20, width: 20 }} />
-        <Text style={styles.btnText}>Open In Maps</Text>
+        <Text style={styles.btnText}>{t('Open')}</Text>
       </TouchableOpacity>
     </View>
   );

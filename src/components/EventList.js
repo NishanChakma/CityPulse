@@ -3,17 +3,19 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import EventCard from './EventCard';
 import colors from '../utills/colors';
+import { useTranslation } from 'react-i18next';
 
 // ✅ Event List
 const EventList = () => {
+  const { t } = useTranslation();
   const events = useSelector(state => state.event.events);
 
   if (!events || events.length === 0) return null;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Popular Events</Text>
-      <Text style={styles.des}>Discover what’s happening around you</Text>
+      <Text style={styles.title}>{t('popular')}</Text>
+      <Text style={styles.des}>{t('discoverWhat')}</Text>
 
       <FlatList
         data={events}

@@ -3,13 +3,18 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import EventCard from '../components/EventCard';
 import colors from '../utills/colors';
+import { useTranslation } from 'react-i18next';
 
 const FavoriteScreen = () => {
+  const { t } = useTranslation();
   const favorites = useSelector(state => state.event.favorites);
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 10 }}>
-      <Text style={styles.fav}>Your Favourite Event's</Text>
+      <Text style={styles.fav}>{t('favourite')}</Text>
+      {favorites?.length === 0 && (
+        <Text style={styles.noFav}>{t('noFavorite')}</Text>
+      )}
       <FlatList
         data={favorites}
         keyExtractor={item => item.id}
@@ -31,5 +36,10 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     paddingBottom: 20,
     paddingTop: 10,
+  },
+  noFav: {
+    color: colors.primary,
+    fontSize: 14,
+    textAlign: 'center',
   },
 });

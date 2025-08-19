@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import colors from '../utills/colors';
 import glob from '../assests/glob.png';
 import LanguageModal from '../components/modal/LanguageModal';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [languageModal, setlanguageModal] = useState(false);
+  const lang = useSelector(state => state.auth.lang);
+
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>CityPulse</Text>
@@ -14,7 +17,7 @@ const Header = () => {
         onPress={() => setlanguageModal(true)}
       >
         <Image source={glob} style={styles.glob} />
-        <Text style={styles.lang}>Eng</Text>
+        <Text style={styles.lang}>{lang === 'es' ? 'العربية' : 'English'}</Text>
       </TouchableOpacity>
       <LanguageModal visible={languageModal} setVisible={setlanguageModal} />
     </View>

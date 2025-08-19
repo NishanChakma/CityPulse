@@ -4,24 +4,29 @@ import styles from './styles';
 import PrimaryButton from '../PrimaryButton';
 import ShowMessage from '../ShowMessage';
 import bookNow from '../../assests/book.png';
+import { useTranslation } from 'react-i18next';
 
 const BookNow = () => {
+  const { t } = useTranslation();
   const min = 20;
   const max = 60;
   const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
   return (
     <View style={styles.bookContainer}>
       <View style={styles.flex}>
-        <Text style={styles.entry}>Standard Entry</Text>
-        <Text style={styles.price}>From ${randomNumber}</Text>
+        <Text style={styles.entry}>{t('standard')}</Text>
+        <Text style={styles.price}>
+          {t('from')} ${randomNumber}
+        </Text>
       </View>
       <PrimaryButton
         onPress={() => ShowMessage('Future Scope')}
-        title="Book Now"
+        title={t('BookNow')}
         logo={bookNow}
       />
       <Text style={[styles.des, { textAlign: 'center', paddingTop: 20 }]}>
-        Secure Payment, Instant confirmation
+        {t('secure')}
       </Text>
     </View>
   );

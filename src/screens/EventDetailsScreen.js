@@ -23,6 +23,7 @@ import EventDescription from '../components/eventDetails/EventDescription';
 import MapsView from '../components/eventDetails/MapsView';
 import BookNow from '../components/eventDetails/BookNow';
 import ImageSlider from '../components/eventDetails/ImageSlider';
+import { useTranslation } from 'react-i18next';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,6 +40,7 @@ const EventCard = ({ logo, title, description }) => (
 );
 
 const EventDetailsScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const event = useSelector(state => state.event.currentEvent);
 
@@ -62,7 +64,7 @@ const EventDetailsScreen = () => {
       <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
         <View style={styles.backContent}>
           <Image source={back} style={styles.backIcon} />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{t('Back')}</Text>
         </View>
       </TouchableOpacity>
 

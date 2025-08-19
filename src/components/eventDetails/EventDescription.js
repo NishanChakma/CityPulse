@@ -2,8 +2,10 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import styles from './styles';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const EventDescription = () => {
+  const { t } = useTranslation();
   const event = useSelector(state => state.event.currentEvent);
   const [viewAll, setviewAll] = useState(true);
 
@@ -11,7 +13,7 @@ const EventDescription = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.about}>About This Event</Text>
+      <Text style={styles.about}>{t('About')}</Text>
       <Text
         style={styles.des}
         numberOfLines={viewAll ? 4 : undefined}
@@ -27,7 +29,9 @@ const EventDescription = () => {
         {event?.pleaseNote}
       </Text>
       <TouchableOpacity onPress={() => setviewAll(e => !e)}>
-        <Text style={styles.more}>{viewAll ? 'Read More' : 'Collapse'}</Text>
+        <Text style={styles.more}>
+          {viewAll ? t('ReadMore') : t('Collapse')}
+        </Text>
       </TouchableOpacity>
     </View>
   );

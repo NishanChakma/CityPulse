@@ -6,11 +6,13 @@ import AuthScreen from '../screens/AuthScreen';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import i18n from '../hooks/LanguageHooks';
 
 const Stack = createStackNavigator();
 
 const RootNavigation = () => {
   const isLoggedIn = useSelector(state => state?.auth?.isLoggedIn);
+  const lang = useSelector(state => state?.auth?.lang);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -23,6 +25,10 @@ const RootNavigation = () => {
   useEffect(() => {
     const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
     return subscriber; // unsubscribe on unmount
+  }, []);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
   }, []);
 
   if (initializing) return null;

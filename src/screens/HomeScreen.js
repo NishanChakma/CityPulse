@@ -4,18 +4,18 @@ import Header from '../components/Header';
 import colors from '../utills/colors';
 import SearchView from '../components/SearchView';
 import EventList from '../components/EventList';
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = () => {
+  const { t } = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <Header />
       <Text style={styles.text}>
-        Discover{' '}
-        <Text style={{ color: colors.primaryLight }}>Amazing Event</Text>
+        {t('discover')}{' '}
+        <Text style={{ color: colors.primaryLight }}>{t('amazing')}</Text>
       </Text>
-      <Text style={styles.des}>
-        Find concerts, sports, theater, and more in your city
-      </Text>
+      <Text style={styles.des}>{t('find')}</Text>
       <SearchView />
       <EventList />
     </ScrollView>
