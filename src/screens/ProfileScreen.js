@@ -53,7 +53,7 @@ const ProfileScreen = () => {
         <ProfileCard
           logo={fingerprint}
           title="Biometric Login"
-          onPress={() => setlanguageModal(true)}
+          onPress={() => ShowMessage('Future Scope', true)}
         />
         <ProfileCard
           logo={logout}

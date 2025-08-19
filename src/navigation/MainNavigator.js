@@ -1,62 +1,78 @@
+import React from 'react';
+import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import AppRoutes from './AppRoutes';
-import ProfileScreen from '../screens/ProfileScreen';
 import HomeNavigator from './HomeNavigator';
+import ProfileScreen from '../screens/ProfileScreen';
+import FavoriteScreen from '../screens/FavoriteScreen';
+
+// Icons
 import HomeIcon from '../assests/home.png';
 import HomeIconActive from '../assests/homeActive.png';
 import UserIcon from '../assests/user.png';
 import UserIconActive from '../assests/userActive.png';
-import { Image } from 'react-native';
+import FavIcon from '../assests/fav.png';
+import FavIconActive from '../assests/red.png';
 
 const Tabs = createBottomTabNavigator();
+
+// Helper function for tab icons
+const getTabBarIcon = (routeName, focused) => {
+  const iconMapping = {
+    [AppRoutes.HOMENAVIGATOR]: {
+      active: HomeIconActive,
+      inactive: HomeIcon,
+      size: { width: 18, height: 18 },
+    },
+    [AppRoutes.FAVORITESCREEN]: {
+      active: FavIconActive,
+      inactive: FavIcon,
+      size: { width: 18, height: 20 },
+    },
+    [AppRoutes.PROFILESCREEN]: {
+      active: UserIconActive,
+      inactive: UserIcon,
+      size: { width: 18, height: 18 },
+    },
+  };
+
+  const { active, inactive, size } = iconMapping[routeName] || {};
+  return (
+    <Image
+      source={focused ? active : inactive}
+      style={size}
+      resizeMode="contain"
+    />
+  );
+};
 
 const MainNavigator = () => {
   return (
     <Tabs.Navigator
+      initialRouteName={AppRoutes.HOMENAVIGATOR}
       screenOptions={({ route }) => ({
         headerShown: false,
         unmountOnBlur: true,
-        tabBarIcon: ({ focused }) => {
-          if (route.name === AppRoutes.HOMENAVIGATOR) {
-            return focused ? (
-              <Image
-                source={HomeIconActive}
-                style={{ height: 18, width: 18 }}
-              />
-            ) : (
-              <Image source={HomeIcon} style={{ height: 18, width: 18 }} />
-            );
-          } else if (route.name === AppRoutes.PROFILESCREEN) {
-            return focused ? (
-              <Image
-                source={UserIconActive}
-                style={{ height: 18, width: 18 }}
-              />
-            ) : (
-              <Image source={UserIcon} style={{ height: 18, width: 18 }} />
-            );
-          }
-        },
+        tabBarIcon: ({ focused }) => getTabBarIcon(route.name, focused),
         tabBarActiveTintColor: '#D72638',
         tabBarInactiveTintColor: '#999',
       })}
-      initialRouteName={AppRoutes.HOME}
     >
       <Tabs.Screen
         name={AppRoutes.HOMENAVIGATOR}
         component={HomeNavigator}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarActiveTintColor: '#D72638',
-        }}
+        options={{ tabBarLabel: 'Home' }}
+      />
+      <Tabs.Screen
+        name={AppRoutes.FAVORITESCREEN}
+        component={FavoriteScreen}
+        options={{ tabBarLabel: 'Favourite' }}
       />
       <Tabs.Screen
         name={AppRoutes.PROFILESCREEN}
         component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarActiveTintColor: '#D72638',
-        }}
+        options={{ tabBarLabel: 'Profile' }}
       />
     </Tabs.Navigator>
   );
