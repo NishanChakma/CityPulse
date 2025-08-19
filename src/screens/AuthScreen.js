@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Alert,
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
@@ -16,15 +15,20 @@ import PrimaryButton from '../components/PrimaryButton';
 import HandleInput from '../components/HandleInput';
 import ShowMessage from '../components/ShowMessage';
 import validateEmail from '../utills/validateEmail';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from '@react-native-firebase/auth';
 
 const AuthScreen = () => {
   const navigation = useNavigation();
-
   const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // ✅ Unified handler for Login & Signup
   const handleAuth = () => {
@@ -49,13 +53,48 @@ const AuthScreen = () => {
       return ShowMessage('Password must be at least 6 characters!', true);
 
     // --- Success ---
-    Alert.alert(
-      isSignUp ? 'Sign Up Successful' : 'Login Successful',
-      `Welcome ${isSignUp ? firstName : 'back'}!`,
-    );
+    handleFirebase(trimmedEmail, trimmedPassword);
+  };
 
-    // Example: Navigate after login/signup
-    // navigation.navigate(AppRoutes.Home);
+  const handleFirebase = async (email, password) => {
+    // createUserWithEmailAndPassword(getAuth(), email, password)
+    //   .then(e => console.log('eeeeee', e))
+    //   .catch(e => console.log('>>>>', e));
+    try {
+      setLoading(true);
+      if (isSignUp) {
+        // 🔑 Firebase Signup
+        const userCred = await createUserWithEmailAndPassword(
+          getAuth(),
+          email,
+          password,
+        );
+        await userCred.user.updateProfile({
+          displayName: `${firstName} ${lastName}`,
+        });
+        ShowMessage('Account created successfully!');
+      } else {
+        // 🔑 Firebase Login
+        await signInWithEmailAndPassword(getAuth(), email, password);
+        ShowMessage('Login successful!');
+      }
+
+      // ✅ Navigate after success
+      navigation.reset({
+        index: 0,
+        routes: [{ name: AppRoutes.MAIN_ROUTE }], // change to your Home route
+      });
+    } catch (error) {
+      let msg = 'Something went wrong';
+      if (error.code === 'auth/email-already-in-use')
+        msg = 'Email already in use!';
+      if (error.code === 'auth/invalid-email') msg = 'Invalid email!';
+      if (error.code === 'auth/user-not-found') msg = 'User not found!';
+      if (error.code === 'auth/wrong-password') msg = 'Incorrect password!';
+      ShowMessage(msg, true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
