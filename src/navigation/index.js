@@ -5,10 +5,12 @@ import MainNavigator from './MainNavigator';
 import AuthScreen from '../screens/AuthScreen';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const RootNavigation = () => {
+  const isLoggedIn = useSelector(state => state?.auth?.isLoggedIn);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -33,7 +35,9 @@ const RootNavigation = () => {
       }}
     >
       <Stack.Navigator
-        initialRouteName={user ? AppRoutes.MAIN_ROUTE : AppRoutes.AUTHSCREEN}
+        initialRouteName={
+          user && isLoggedIn ? AppRoutes.MAIN_ROUTE : AppRoutes.AUTHSCREEN
+        }
         screenOptions={() => ({
           headerShown: false,
         })}

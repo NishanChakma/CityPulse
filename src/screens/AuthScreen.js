@@ -20,9 +20,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../store/slices/authSlice';
 
 const AuthScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -57,43 +60,75 @@ const AuthScreen = () => {
   };
 
   const handleFirebase = async (email, password) => {
-    // createUserWithEmailAndPassword(getAuth(), email, password)
-    //   .then(e => console.log('eeeeee', e))
-    //   .catch(e => console.log('>>>>', e));
+    setLoading(true);
+
     try {
-      setLoading(true);
+      const auth = getAuth();
+      let userCredential;
+
       if (isSignUp) {
         // 🔑 Firebase Signup
-        const userCred = await createUserWithEmailAndPassword(
-          getAuth(),
+        userCredential = await createUserWithEmailAndPassword(
+          auth,
           email,
           password,
         );
-        await userCred.user.updateProfile({
+
+        // Update display name
+        await updateProfile(userCredential.user, {
           displayName: `${firstName} ${lastName}`,
         });
+
         ShowMessage('Account created successfully!');
       } else {
         // 🔑 Firebase Login
-        await signInWithEmailAndPassword(getAuth(), email, password);
+        userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
         ShowMessage('Login successful!');
       }
 
-      // ✅ Navigate after success
+      // Prepare user payload safely
+      const user = userCredential.user;
+      const payload = {
+        displayName:
+          user.displayName || user.providerData?.[0]?.displayName || '',
+        email: user.email || '',
+      };
+
+      // Store in Redux
+      dispatch(loginAction(payload));
+
+      // Navigate to main/home
       navigation.reset({
         index: 0,
-        routes: [{ name: AppRoutes.MAIN_ROUTE }], // change to your Home route
+        routes: [{ name: AppRoutes.MAIN_ROUTE }],
       });
-    } catch (error) {
-      let msg = 'Something went wrong';
-      if (error.code === 'auth/email-already-in-use')
-        msg = 'Email already in use!';
-      if (error.code === 'auth/invalid-email') msg = 'Invalid email!';
-      if (error.code === 'auth/user-not-found') msg = 'User not found!';
-      if (error.code === 'auth/wrong-password') msg = 'Incorrect password!';
-      ShowMessage(msg, true);
+    } catch (err) {
+      handleFirebaseError(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 🔹 Centralized error handler
+  const handleFirebaseError = error => {
+    const errMsg = String(error);
+    console.error('Firebase Error: ', errMsg);
+    if (errMsg.includes('auth/email-already-in-use')) {
+      ShowMessage('This email is already in use', true);
+    } else if (errMsg.includes('auth/wrong-password')) {
+      ShowMessage('Email and password do not match', true);
+    } else if (errMsg.includes('auth/invalid-email')) {
+      ShowMessage('Invalid email format', true);
+    } else if (errMsg.includes('auth/invalid-credential')) {
+      ShowMessage('Please enter valid credentials', true);
+    } else if (errMsg.includes('auth/user-not-found')) {
+      ShowMessage('User not found', true);
+    } else {
+      ShowMessage('Something went wrong. Please try again.', true);
     }
   };
 
