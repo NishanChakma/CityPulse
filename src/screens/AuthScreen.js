@@ -153,14 +153,14 @@ const AuthScreen = () => {
         {isSignUp && (
           <View style={styles.signup}>
             <HandleInput
-              placeholder="First Name"
+              placeholder={t('fisrtName')}
               value={firstName}
               setValue={setFirstName}
               type="default"
               width="48%"
             />
             <HandleInput
-              placeholder="Last Name"
+              placeholder={t('lastname')}
               value={lastName}
               setValue={setLastName}
               type="default"
@@ -170,14 +170,14 @@ const AuthScreen = () => {
         )}
 
         <HandleInput
-          placeholder="Email"
+          placeholder={t('Email')}
           value={email}
           setValue={setEmail}
           type="email-address"
           autoCapitalize="none"
         />
         <HandleInput
-          placeholder="Password"
+          placeholder={t('Password')}
           value={password}
           setValue={setPassword}
           type="default"
@@ -186,14 +186,12 @@ const AuthScreen = () => {
 
         <PrimaryButton
           onPress={handleAuth}
-          title={isSignUp ? 'Sign Up' : 'Login'}
+          title={isSignUp ? t('SignUp') : t('Login')}
         />
 
         <TouchableOpacity onPress={() => setIsSignUp(prev => !prev)}>
           <Text style={styles.link}>
-            {isSignUp
-              ? 'Already have an account? Sign In'
-              : 'Don’t have an account? Sign Up'}
+            {isSignUp ? t('haveAccount') : t('NoAccout')}
           </Text>
         </TouchableOpacity>
       </ScrollView>
