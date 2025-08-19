@@ -1,19 +1,20 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
 import close from '../../assests/close.png';
 import colors from '../../utills/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLang } from '../../store/slices/authSlice';
+import i18n from '../../hooks/LanguageHooks';
 
 const options = [
   {
     label: 'English',
-    value: 'English',
+    value: 'en',
   },
   {
     label: 'Arabic',
-    value: 'Arabic',
+    value: 'es',
   },
 ];
 
@@ -23,6 +24,7 @@ const LanguageModal = ({ visible, setVisible }) => {
 
   const handleSelect = value => {
     dispatch(setLang(value));
+    i18n.changeLanguage(value);
   };
 
   return (

@@ -23,8 +23,10 @@ import {
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../store/slices/authSlice';
 import Loading from '../components/Loading';
+import { useTranslation } from 'react-i18next';
 
 const AuthScreen = () => {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isSignUp, setIsSignUp] = useState(false);
@@ -145,7 +147,7 @@ const AuthScreen = () => {
       >
         <Text style={styles.title}>City Pulse</Text>
         <Text style={styles.des}>
-          {isSignUp ? 'Create your account' : 'Sign in to your account'}
+          {isSignUp ? t('create') : t('SignInText')}
         </Text>
 
         {isSignUp && (
