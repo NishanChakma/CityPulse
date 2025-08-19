@@ -40,7 +40,6 @@ const EventCard = ({ title, des, logo }) => {
 const EventDetailsScreen = () => {
   const navigation = useNavigation();
   const event = useSelector(state => state.event.currentEvent);
-  console.log('>>>>sssss', event);
 
   return (
     <View style={styles.container}>
