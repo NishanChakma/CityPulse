@@ -12,10 +12,15 @@ import demo from '../assests/demo.png';
 import fav from '../assests/fav.png';
 import calendar from '../assests/calendar.png';
 import location from '../assests/location.png';
+import { useNavigation } from '@react-navigation/native';
+import AppRoutes from '../navigation/AppRoutes';
 
 const EventList = () => {
+  const navigation = useNavigation();
+
   const handleDetails = async () => {
     console.log('>>>>>ddd');
+    navigation.navigate(AppRoutes.EVENTDETAILSSCREEN);
   };
 
   const handleFavourite = async () => {

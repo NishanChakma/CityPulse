@@ -1,6 +1,5 @@
 import Toast from 'react-native-root-toast';
 import colors from '../utills/colors';
-import { Alert } from 'react-native';
 
 const ShowMessage = (text, error = false, color, opacity) => {
   return Toast.show(text, {
