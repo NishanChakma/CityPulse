@@ -38,7 +38,7 @@ const SearchScreen = () => {
       dispatch(setEvents(events));
 
       if (events.length === 0) {
-        ShowMessage('No events found for your search.');
+        ShowMessage('No events found matching your search.', true);
       }
     } catch (err) {
       ShowMessage(err?.message || 'Something went wrong. Please try again.');

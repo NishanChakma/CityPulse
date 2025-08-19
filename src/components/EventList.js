@@ -1,3 +1,4 @@
+import React, { useCallback } from 'react';
 import {
   FlatList,
   Image,
@@ -6,138 +7,194 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import dayjs from 'dayjs';
+
 import colors from '../utills/colors';
-import demo from '../assests/demo.png';
 import fav from '../assests/fav.png';
+import red from '../assests/red.png';
 import calendar from '../assests/calendar.png';
 import location from '../assests/location.png';
-import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
+import { setFavourite } from '../store/slices/eventSlice';
 
-const EventList = () => {
+// ✅ Single Event Card
+const RenderItem = React.memo(({ item }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const favorites = useSelector(state => state.event.favorites);
 
-  const handleDetails = async () => {
-    console.log('>>>>>ddd');
-    navigation.navigate(AppRoutes.EVENTDETAILSSCREEN);
-  };
+  const handleFavourite = useCallback(() => {
+    const updatedFavorites = favorites.some(e => e.id === item.id)
+      ? favorites.filter(e => e.id !== item.id)
+      : [...favorites, item];
 
-  const handleFavourite = async () => {
-    console.log('>>>>>aaa');
-  };
+    dispatch(setFavourite(updatedFavorites));
+  }, [dispatch, favorites, item]);
+
+  return (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(AppRoutes.EVENTDETAILSSCREEN, { eventId: item.id })
+      }
+    >
+      <View style={styles.card}>
+        {/* Event Image */}
+        {item?.images?.[0]?.url ? (
+          <Image
+            source={{ uri: item.images[0].url, cache: 'force-cache' }}
+            style={styles.image}
+          />
+        ) : (
+          <View style={[styles.image, styles.imagePlaceholder]} />
+        )}
+
+        {/* Event Details */}
+        <View style={styles.mid}>
+          <Text style={styles.event} numberOfLines={1}>
+            {item?.name || 'Untitled Event'}
+          </Text>
+
+          {/* Date */}
+          <View style={styles.flex}>
+            <Image source={calendar} style={styles.icon} />
+            <Text style={styles.date} numberOfLines={1}>
+              {item?.dates?.start?.dateTime
+                ? dayjs(item.dates.start.dateTime).format('ddd, D MMM YYYY')
+                : 'Date TBA'}
+            </Text>
+          </View>
+
+          {/* Location */}
+          <View style={styles.flex}>
+            <Image
+              source={location}
+              style={[styles.icon, { marginRight: 5 }]}
+            />
+            <Text style={styles.date} numberOfLines={1}>
+              {item?._embedded?.venues?.[0]?.address?.line1 ||
+                'Unknown Address'}
+              {item?._embedded?.venues?.[0]?.city?.name
+                ? `, ${item._embedded.venues[0].city.name}`
+                : ''}
+            </Text>
+          </View>
+        </View>
+
+        {/* Favourite Button */}
+        <TouchableOpacity style={styles.touch} onPress={handleFavourite}>
+          <Image
+            source={favorites.some(e => e.id === item.id) ? red : fav}
+            style={styles.favIcon}
+          />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  );
+});
+
+// ✅ Event List
+const EventList = () => {
+  const events = useSelector(state => state.event.events);
+
+  if (!events || events.length === 0) return null;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Popular Events</Text>
       <Text style={styles.des}>Discover what’s happening around you</Text>
 
-      <TouchableOpacity onPress={() => handleDetails()}>
-        <View style={styles.card}>
-          <Image source={demo} style={{ height: 64, width: 64 }} />
-          <View style={styles.mid}>
-            <Text style={styles.event} numberOfLines={1} ellipsizeMode="tail">
-              SoundStorm Sessions
-            </Text>
-            <View style={styles.flex}>
-              <Image source={calendar} style={{ height: 12, width: 12 }} />
-              <Text
-                style={[styles.date, { paddingVertical: 5, paddingLeft: 5 }]}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                Mon, Aug 26
-              </Text>
-            </View>
-            <View style={styles.flex}>
-              <Image
-                source={location}
-                style={{ height: 12, width: 12, marginRight: 5 }}
-              />
-              <Text style={styles.date} numberOfLines={1} ellipsizeMode="tail">
-                Central Park, New York
-              </Text>
-            </View>
-          </View>
-          <TouchableOpacity style={styles.touch} onPress={handleFavourite}>
-            <Image source={fav} style={{ height: 24, width: 24 }} />
-          </TouchableOpacity>
-        </View>
-      </TouchableOpacity>
-
-      {/* <FlatList
-        data={DATA}
+      <FlatList
+        data={events}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={{ color: '#fff' }}>{item.title}</Text>
-          </View>
-        )}
-        scrollEnabled={false} // 🔑 Prevent FlatList from scrolling
-      /> */}
+        renderItem={({ item }) => <RenderItem item={item} />}
+        scrollEnabled={false} // keep parent ScrollView scrolling
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
 
 export default EventList;
 
+// ✅ Styles
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
   },
   title: {
     fontSize: 20,
-    fontWeight: 700,
+    fontWeight: '700',
     color: colors.textPrimary,
     textAlign: 'center',
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 8,
   },
   des: {
-    fontSize: 16,
-    fontWeight: 400,
+    fontSize: 15,
+    fontWeight: '400',
     color: colors.textSecondary,
     textAlign: 'center',
     paddingBottom: 20,
-    paddingHorizontal: 50,
+    paddingHorizontal: 40,
   },
   card: {
     flexDirection: 'row',
-    width: '100%',
-    padding: 10,
-    backgroundColor: colors.inputColor,
-    borderRadius: 2,
     alignItems: 'center',
-    overflow: 'hidden',
-    marginBottom: 10,
+    backgroundColor: colors.inputColor,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 12,
+  },
+  image: {
+    height: 64,
+    width: 64,
+    borderRadius: 6,
+    backgroundColor: '#eee',
+  },
+  imagePlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   mid: {
-    overflow: 'hidden',
-    flexDirection: 'column',
-    paddingLeft: 10,
-    marginRight: 90,
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 40,
   },
   event: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: '600',
     color: colors.textPrimary,
-    textOverflow: 'ellipsis',
   },
   date: {
     fontSize: 12,
-    fontWeight: 400,
+    fontWeight: '400',
     color: colors.textSecondary,
-    textOverflow: 'ellipsis',
-    width: '90%',
+    flexShrink: 1,
+  },
+  icon: {
+    height: 12,
+    width: 12,
+  },
+  flex: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
   },
   touch: {
     position: 'absolute',
     right: 10,
     top: 10,
-    zIndex: 2,
   },
-  flex: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  favIcon: {
+    height: 24,
+    width: 24,
+  },
+  notFound: {
+    fontSize: 14,
+    color: colors.primary,
+    textAlign: 'center',
+    paddingTop: 30,
   },
 });
