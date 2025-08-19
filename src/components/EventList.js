@@ -17,7 +17,7 @@ import red from '../assests/red.png';
 import calendar from '../assests/calendar.png';
 import location from '../assests/location.png';
 import AppRoutes from '../navigation/AppRoutes';
-import { setFavourite } from '../store/slices/eventSlice';
+import { setCurrentEvent, setFavourite } from '../store/slices/eventSlice';
 
 // ✅ Single Event Card
 const RenderItem = React.memo(({ item }) => {
@@ -33,12 +33,13 @@ const RenderItem = React.memo(({ item }) => {
     dispatch(setFavourite(updatedFavorites));
   }, [dispatch, favorites, item]);
 
+  const handleDetails = useCallback(() => {
+    dispatch(setCurrentEvent(item));
+    navigation.navigate(AppRoutes.EVENTDETAILSSCREEN);
+  }, [dispatch, item]);
+
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate(AppRoutes.EVENTDETAILSSCREEN, { eventId: item.id })
-      }
-    >
+    <TouchableOpacity onPress={handleDetails}>
       <View style={styles.card}>
         {/* Event Image */}
         {item?.images?.[0]?.url ? (

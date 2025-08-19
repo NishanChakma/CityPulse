@@ -6,7 +6,6 @@ import axios from 'axios';
 // };
 
 const request = async config => {
-  console.log('>>>>ssss', config);
   const callBack = axios(config);
   return callBack
     .then(() => {

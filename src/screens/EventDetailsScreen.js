@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import back from '../assests/back.png';
-import events from '../assests/events.png';
 import colors from '../utills/colors';
 import { useNavigation } from '@react-navigation/native';
 import calendarRound from '../assests/calendarRound.png';
@@ -17,6 +16,14 @@ import locationRound from '../assests/locationRound.png';
 import EventDescription from '../components/eventDetails/EventDescription';
 import MapsView from '../components/eventDetails/MapsView';
 import BookNow from '../components/eventDetails/BookNow';
+import { useSelector } from 'react-redux';
+import ImageSlider from '../components/eventDetails/ImageSlider';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const EventCard = ({ title, des, logo }) => {
   return (
@@ -32,6 +39,9 @@ const EventCard = ({ title, des, logo }) => {
 
 const EventDetailsScreen = () => {
   const navigation = useNavigation();
+  const event = useSelector(state => state.event.currentEvent);
+  console.log('>>>>sssss', event);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
@@ -42,23 +52,44 @@ const EventDetailsScreen = () => {
       </TouchableOpacity>
 
       <ScrollView>
-        <Image source={events} style={styles.bg} />
+        <ImageSlider />
 
-        <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-          <Text style={styles.title}>Echoes of Metal</Text>
-          <Text style={styles.place}>Heavy Metal, Hard Rock, Alternative</Text>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text style={styles.title}>{event?.name}</Text>
+          <Text style={styles.place}>
+            {/* Join genre names and segment names with a comma */}
+            {[
+              ...(event?.classifications?.map(e => e.genre.name) || []),
+              ...(event?.classifications?.map(e => e.segment.name) || []),
+            ].join(', ')}
+          </Text>
         </View>
 
         <EventCard
           logo={calendarRound}
-          title={'Monday, August 26'}
-          des={'2024'}
+          title={dayjs(event?.dates?.access?.startDateTime).format(
+            'dddd, MMMM D',
+          )}
+          des={dayjs(event?.dates?.access?.startDateTime).format('YYYY')}
         />
-        <EventCard logo={timeRound} title={'Monday, August 26'} des={'2024'} />
+        <EventCard
+          logo={timeRound}
+          title={dayjs
+            .utc(event?.dates?.access?.startDateTime)
+            .format('h:mm A')}
+          des={
+            'Doors open at ' +
+            dayjs.utc(event?.dates?.start?.dateTime).format('h:mm A')
+          }
+        />
         <EventCard
           logo={locationRound}
-          title={'Monday, August 26'}
-          des={'2024'}
+          title={event?._embedded?.venues?.[0]?.name}
+          des={
+            event?._embedded?.venues?.[0]?.address?.line1 +
+            ', ' +
+            event?._embedded?.venues?.[0]?.city?.name
+          }
         />
 
         <EventDescription />
@@ -83,12 +114,12 @@ const styles = StyleSheet.create({
   },
   back: {
     position: 'absolute',
-    top: 10,
+    top: 20,
     left: 10,
     zIndex: 999,
   },
   backText: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     fontWeight: 700,
   },
@@ -119,6 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textSecondary,
     fontWeight: 400,
-    paddingtop: 10,
+    paddingTop: 2,
   },
 });

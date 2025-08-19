@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   events: [],
   favorites: [],
+  currentEvent: {},
 };
 
 export const eventSlice = createSlice({
@@ -15,9 +16,12 @@ export const eventSlice = createSlice({
     setFavourite: (state, action) => {
       state.favorites = action.payload;
     },
+    setCurrentEvent: (state, action) => {
+      state.currentEvent = action.payload;
+    },
   },
 });
 
-export const { setEvents, setFavourite } = eventSlice.actions;
+export const { setEvents, setFavourite, setCurrentEvent } = eventSlice.actions;
 
 export default eventSlice.reducer;

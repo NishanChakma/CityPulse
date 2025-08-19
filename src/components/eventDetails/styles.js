@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 600,
     color: colors.textPrimary,
+    paddingBottom: 10,
   },
   mapsButton: {
     flexDirection: 'row',
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 20,
+    marginBottom: 5,
   },
   entry: {
     fontSize: 14,
