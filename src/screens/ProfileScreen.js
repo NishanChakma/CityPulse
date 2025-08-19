@@ -9,7 +9,7 @@ import logout from '../assests/logout.png';
 import ProfileCard from '../components/ProfileCard';
 import { getAuth, signOut } from '@react-native-firebase/auth';
 import ShowMessage from '../components/ShowMessage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
@@ -17,6 +17,7 @@ import AppRoutes from '../navigation/AppRoutes';
 const ProfileScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const userInfo = useSelector(state => state?.auth?.userInfo);
   const [languageModal, setlanguageModal] = useState(false);
 
   const handleLogout = async () => {
@@ -37,6 +38,11 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <Image source={bg} style={styles.img} />
       <Image source={men} style={styles.men} />
+      {userInfo?.displayName && (
+        <Text style={styles.name}>{userInfo.displayName}</Text>
+      )}
+      {userInfo?.email && <Text style={styles.email}>{userInfo.email}</Text>}
+
       <View style={{ padding: 10 }}>
         <Text style={styles.preference}>Preference</Text>
         <ProfileCard
@@ -84,5 +90,18 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingBottom: 10,
     paddingTop: 20,
+  },
+  name: {
+    color: colors.primary,
+    fontSize: 16,
+    textAlign: 'center',
+    paddingTop: 20,
+    fontWeight: 700,
+  },
+  email: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    textAlign: 'center',
+    paddingTop: 10,
   },
 });
