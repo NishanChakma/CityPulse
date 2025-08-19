@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
+import LanguageModal from '../components/modal/LanguageModal';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const ProfileScreen = () => {
           style={{ marginTop: 50 }}
         />
       </View>
+
+      <LanguageModal visible={languageModal} setVisible={setlanguageModal} />
     </View>
   );
 };

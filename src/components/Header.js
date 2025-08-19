@@ -1,16 +1,22 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import colors from '../utills/colors';
 import glob from '../assests/glob.png';
+import LanguageModal from '../components/modal/LanguageModal';
 
 const Header = () => {
+  const [languageModal, setlanguageModal] = useState(false);
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>CityPulse</Text>
-      <View style={styles.flex}>
+      <TouchableOpacity
+        style={styles.flex}
+        onPress={() => setlanguageModal(true)}
+      >
         <Image source={glob} style={styles.glob} />
         <Text style={styles.lang}>Eng</Text>
-      </View>
+      </TouchableOpacity>
+      <LanguageModal visible={languageModal} setVisible={setlanguageModal} />
     </View>
   );
 };

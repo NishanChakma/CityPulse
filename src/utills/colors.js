@@ -5,4 +5,5 @@ export default {
   textSecondary: '#A7A7A7',
   buttonColor: '#831828',
   inputColor: '#1F1E1E',
+  background: '#393939',
 };
