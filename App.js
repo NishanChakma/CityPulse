@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import RootNavigation from './src/navigation';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 function App() {
   useEffect(() => {
@@ -10,12 +11,14 @@ function App() {
   }, []);
 
   return (
-    <SafeAreaProvider style={{ backgroundColor: '#000' }}>
-      <StatusBar barStyle={'light-content'} />
-      <SafeAreaView style={styles.container}>
-        <RootNavigation />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <RootSiblingParent>
+      <SafeAreaProvider style={{ backgroundColor: '#000' }}>
+        <StatusBar barStyle={'light-content'} />
+        <SafeAreaView style={styles.container}>
+          <RootNavigation />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </RootSiblingParent>
   );
 }
 
