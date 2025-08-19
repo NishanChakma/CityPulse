@@ -7,7 +7,7 @@ import locationIcon from '../assests/location.png';
 import PrimaryButton from './PrimaryButton';
 import Loading from './Loading';
 import API from '../services/api';
-import ShowMessage from './ShowMessage';
+import ShowMessage from '../hooks/ShowMessage';
 import { setEvents } from '../store/slices/eventSlice';
 import { useTranslation } from 'react-i18next';
 

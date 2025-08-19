@@ -8,7 +8,7 @@ import glob from '../assests/glob.png';
 import logout from '../assests/logout.png';
 import ProfileCard from '../components/ProfileCard';
 import { getAuth, signOut } from '@react-native-firebase/auth';
-import ShowMessage from '../components/ShowMessage';
+import ShowMessage from '../hooks/ShowMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';

@@ -13,7 +13,7 @@ import AppRoutes from '../navigation/AppRoutes';
 import colors from '../utills/colors';
 import PrimaryButton from '../components/PrimaryButton';
 import HandleInput from '../components/HandleInput';
-import ShowMessage from '../components/ShowMessage';
+import ShowMessage from '../hooks/ShowMessage';
 import validateEmail from '../utills/validateEmail';
 import {
   getAuth,
