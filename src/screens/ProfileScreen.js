@@ -40,7 +40,7 @@ const ProfileScreen = () => {
   };
 
   const handleRadio = e => {
-    ShowMessage('Future Scope');
+    ShowMessage('Future Scope', true);
     if (!e) {
       dispatch(setBiometric(false));
       return;
