@@ -98,8 +98,10 @@ const AuthScreen = () => {
       const user = userCredential.user;
       const payload = {
         displayName:
-          user.displayName || user.providerData?.[0]?.displayName || '',
-        email: user.email || '',
+          user.displayName ||
+          user.providerData?.[0]?.displayName ||
+          `${firstName} ${lastName}`,
+        email: user.email || email,
       };
 
       // Store in Redux
