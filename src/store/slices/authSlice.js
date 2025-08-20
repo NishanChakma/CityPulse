@@ -4,6 +4,7 @@ const initialState = {
   userInfo: {},
   isLoggedIn: false,
   lang: 'en',
+  biometric: false,
 };
 
 export const authSlice = createSlice({
@@ -20,9 +21,13 @@ export const authSlice = createSlice({
     setLang: (state, action) => {
       state.lang = action.payload;
     },
+    setBiometric: (state, action) => {
+      state.biometric = action.payload;
+    },
   },
 });
 
-export const { loginAction, logoutAction, setLang } = authSlice.actions;
+export const { loginAction, logoutAction, setLang, setBiometric } =
+  authSlice.actions;
 
 export default authSlice.reducer;

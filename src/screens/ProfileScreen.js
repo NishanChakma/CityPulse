@@ -10,17 +10,19 @@ import ProfileCard from '../components/ProfileCard';
 import { getAuth, signOut } from '@react-native-firebase/auth';
 import ShowMessage from '../hooks/ShowMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../store/slices/authSlice';
+import { logoutAction, setBiometric } from '../store/slices/authSlice';
 import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
 import LanguageModal from '../components/modal/LanguageModal';
 import { useTranslation } from 'react-i18next';
+import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 
 const ProfileScreen = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(state => state?.auth?.userInfo);
+  const biometric = useSelector(state => state?.auth?.biometric);
   const [languageModal, setlanguageModal] = useState(false);
 
   const handleLogout = async () => {
@@ -35,6 +37,28 @@ const ProfileScreen = () => {
       .catch(
         () => ShowMessage('Error! Please check your internet connection', true), //due to no backend firebase will unable to logout without internet);
       );
+  };
+
+  const handleRadio = e => {
+    ShowMessage('Future Scope');
+    if (!e) {
+      dispatch(setBiometric(false));
+      return;
+    }
+    const rnBiometric = new ReactNativeBiometrics();
+    rnBiometric.isSensorAvailable().then(({ available, biometryType }) => {
+      if (available && biometryType !== BiometryTypes.TouchID) {
+        ShowMessage('Touch ID not available on this device!');
+      } else {
+        rnBiometric
+          .createKeys('Confirm fingerprint')
+          .then(async () => {
+            dispatch(setBiometric(true));
+            // ShowMessage('Fingerprint saved successfully');
+          })
+          .catch(e => console.error('error: ', e));
+      }
+    });
   };
 
   return (
@@ -56,12 +80,15 @@ const ProfileScreen = () => {
         <ProfileCard
           logo={fingerprint}
           title={t('Biometric')}
-          onPress={() => ShowMessage('Future Scope', true)}
+          onPress={handleRadio}
+          style={{}}
+          isEnabled={biometric}
+          showRadio={true}
         />
         <ProfileCard
           logo={logout}
           title={t('Logout')}
-          onPress={() => handleLogout(true)}
+          onPress={handleLogout}
           style={{ marginTop: 50 }}
         />
       </View>

@@ -1,8 +1,22 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import rightArrow from '../assets/rightArrow.png';
 import colors from '../utils/colors';
 
-const ProfileCard = ({ logo, title, onPress, style }) => {
+const ProfileCard = ({
+  logo,
+  title,
+  onPress,
+  style,
+  isEnabled,
+  showRadio = false,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.card, style]}>
@@ -10,7 +24,17 @@ const ProfileCard = ({ logo, title, onPress, style }) => {
           <Image source={logo} style={styles.glob} />
           <Text style={styles.lang}>{title}</Text>
         </View>
-        <Image source={rightArrow} style={styles.rightArrow} />
+        {!showRadio && <Image source={rightArrow} style={styles.rightArrow} />}
+
+        {showRadio && (
+          <Switch
+            trackColor={{ false: '#767577', true: colors.background }}
+            thumbColor={isEnabled ? colors.primary : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={e => onPress(e)}
+            value={isEnabled}
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
