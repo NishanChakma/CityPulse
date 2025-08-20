@@ -17,7 +17,7 @@ const Header = () => {
         onPress={() => setlanguageModal(true)}
       >
         <Image source={glob} style={styles.glob} />
-        <Text style={styles.lang}>{lang === 'es' ? 'العربية' : 'English'}</Text>
+        <Text style={styles.lang}>{lang === 'ar' ? 'العربية' : 'English'}</Text>
       </TouchableOpacity>
       <LanguageModal visible={languageModal} setVisible={setlanguageModal} />
     </View>

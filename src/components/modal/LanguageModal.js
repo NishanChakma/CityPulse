@@ -14,7 +14,7 @@ const options = [
   },
   {
     label: 'Arabic',
-    value: 'es',
+    value: 'ar',
   },
 ];
 
