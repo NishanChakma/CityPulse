@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import rightArrow from '../assests/rightArrow.png';
-import colors from '../utills/colors';
+import rightArrow from '../assets/rightArrow.png';
+import colors from '../utils/colors';
 
 const ProfileCard = ({ logo, title, onPress, style }) => {
   return (

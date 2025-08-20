@@ -8,12 +8,12 @@ import ProfileScreen from '../screens/ProfileScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 
 // Icons
-import HomeIcon from '../assests/home.png';
-import HomeIconActive from '../assests/homeActive.png';
-import UserIcon from '../assests/user.png';
-import UserIconActive from '../assests/userActive.png';
-import FavIcon from '../assests/fav.png';
-import FavIconActive from '../assests/red.png';
+import HomeIcon from '../assets/home.png';
+import HomeIconActive from '../assets/homeActive.png';
+import UserIcon from '../assets/user.png';
+import UserIconActive from '../assets/userActive.png';
+import FavIcon from '../assets/fav.png';
+import FavIconActive from '../assets/red.png';
 
 const Tabs = createBottomTabNavigator();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import EventCard from './EventCard';
-import colors from '../utills/colors';
+import colors from '../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 // ✅ Event List

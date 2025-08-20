@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import Modal from 'react-native-modal';
-import close from '../../assests/close.png';
-import colors from '../../utills/colors';
+import close from '../../assets/close.png';
+import colors from '../../utils/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLang } from '../../store/slices/authSlice';
 import i18n from '../../hooks/LanguageHooks';

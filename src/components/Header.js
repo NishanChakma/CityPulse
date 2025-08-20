@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
-import colors from '../utills/colors';
-import glob from '../assests/glob.png';
+import colors from '../utils/colors';
+import glob from '../assets/glob.png';
 import LanguageModal from '../components/modal/LanguageModal';
 import { useSelector } from 'react-redux';
 

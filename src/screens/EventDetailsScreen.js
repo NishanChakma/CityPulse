@@ -13,11 +13,11 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import back from '../assests/back.png';
-import calendarRound from '../assests/calendarRound.png';
-import timeRound from '../assests/timeRound.png';
-import locationRound from '../assests/locationRound.png';
-import colors from '../utills/colors';
+import back from '../assets/back.png';
+import calendarRound from '../assets/calendarRound.png';
+import timeRound from '../assets/timeRound.png';
+import locationRound from '../assets/locationRound.png';
+import colors from '../utils/colors';
 
 import EventDescription from '../components/eventDetails/EventDescription';
 import MapsView from '../components/eventDetails/MapsView';

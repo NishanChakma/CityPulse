@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Image, Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
-import colors from '../utills/colors';
-import searchIcon from '../assests/search.png';
-import locationIcon from '../assests/location.png';
+import colors from '../utils/colors';
+import searchIcon from '../assets/search.png';
+import locationIcon from '../assets/location.png';
 import PrimaryButton from './PrimaryButton';
 import Loading from './Loading';
 import API from '../services/api';

@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import bg from '../assests/bg.png';
-import men from '../assests/men.png';
-import colors from '../utills/colors';
-import fingerprint from '../assests/fingerprint.png';
-import glob from '../assests/glob.png';
-import logout from '../assests/logout.png';
+import bg from '../assets/bg.png';
+import men from '../assets/men.png';
+import colors from '../utils/colors';
+import fingerprint from '../assets/fingerprint.png';
+import glob from '../assets/glob.png';
+import logout from '../assets/logout.png';
 import ProfileCard from '../components/ProfileCard';
 import { getAuth, signOut } from '@react-native-firebase/auth';
 import ShowMessage from '../hooks/ShowMessage';

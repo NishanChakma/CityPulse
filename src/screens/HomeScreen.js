@@ -1,7 +1,7 @@
 import { Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import Header from '../components/Header';
-import colors from '../utills/colors';
+import colors from '../utils/colors';
 import SearchView from '../components/SearchView';
 import EventList from '../components/EventList';
 import { useTranslation } from 'react-i18next';

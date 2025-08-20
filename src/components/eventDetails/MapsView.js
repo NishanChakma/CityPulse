@@ -1,7 +1,7 @@
 import { Image, Linking, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import styles from './styles';
-import openMaps from '../../assests/openMaps.png';
+import openMaps from '../../assets/openMaps.png';
 import { useSelector } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
 import { useTranslation } from 'react-i18next';

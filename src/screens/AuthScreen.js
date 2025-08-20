@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppRoutes from '../navigation/AppRoutes';
-import colors from '../utills/colors';
+import colors from '../utils/colors';
 import PrimaryButton from '../components/PrimaryButton';
 import HandleInput from '../components/HandleInput';
 import ShowMessage from '../hooks/ShowMessage';
-import validateEmail from '../utills/validateEmail';
+import validateEmail from '../utils/validateEmail';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -98,10 +98,8 @@ const AuthScreen = () => {
       const user = userCredential.user;
       const payload = {
         displayName:
-          user.displayName ||
-          user.providerData?.[0]?.displayName ||
-          `${firstName} ${lastName}`,
-        email: user.email || email,
+          user.displayName || user.providerData?.[0]?.displayName || '',
+        email: user.email || '',
       };
 
       // Store in Redux

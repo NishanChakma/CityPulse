@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import EventCard from '../components/EventCard';
-import colors from '../utills/colors';
+import colors from '../utils/colors';
 import { useTranslation } from 'react-i18next';
 
 const FavoriteScreen = () => {

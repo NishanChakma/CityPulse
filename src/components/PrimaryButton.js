@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import colors from '../utills/colors';
+import colors from '../utils/colors';
 
 const PrimaryButton = ({ onPress, title, logo = null }) => {
   return (

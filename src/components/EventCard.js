@@ -6,11 +6,11 @@ import AppRoutes from '../navigation/AppRoutes';
 import { setCurrentEvent, setFavourite } from '../store/slices/eventSlice';
 import dayjs from 'dayjs';
 //Icon
-import fav from '../assests/fav.png';
-import red from '../assests/red.png';
-import calendar from '../assests/calendar.png';
-import location from '../assests/location.png';
-import colors from '../utills/colors';
+import fav from '../assets/fav.png';
+import red from '../assets/red.png';
+import calendar from '../assets/calendar.png';
+import location from '../assets/location.png';
+import colors from '../utils/colors';
 
 // ✅ Single Event Card
 const EventCard = React.memo(({ item }) => {

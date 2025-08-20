@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './styles';
 import PrimaryButton from '../PrimaryButton';
 import ShowMessage from '../../hooks/ShowMessage';
-import bookNow from '../../assests/book.png';
+import bookNow from '../../assets/book.png';
 import { useTranslation } from 'react-i18next';
 
 const BookNow = () => {

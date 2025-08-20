@@ -8,7 +8,7 @@ import {
   Easing,
   Text,
 } from 'react-native';
-import loading from '../assests/love.png';
+import loading from '../assets/love.png';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Loading = ({ isLoading, onRequestClose, fromTab }) => {
