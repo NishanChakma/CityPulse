@@ -33,8 +33,8 @@ const EventCard = ({ logo, title, description }) => (
   <View style={styles.cardContainer}>
     <Image source={logo} style={styles.cardLogo} />
     <View style={styles.cardTextContainer}>
-      <Text style={styles.cardTitle}>{title}</Text>
-      <Text style={styles.cardDescription}>{description}</Text>
+      <Text style={styles.cardTitle}>{String(title)}</Text>
+      <Text style={styles.cardDescription}>{String(description)}</Text>
     </View>
   </View>
 );
@@ -42,7 +42,7 @@ const EventCard = ({ logo, title, description }) => (
 const EventDetailsScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const event = useSelector(state => state.event?.currentEvent);
+  const event = useSelector(state => state.event.currentEvent);
 
   // Helper functions
   const formatDate = date =>
@@ -52,19 +52,12 @@ const EventDetailsScreen = () => {
 
   const venue = event?._embedded?.venues?.[0];
   const venueAddress = venue
-    ? `${venue?.address?.line1 || ''}, ${venue?.city?.name || ''}`
+    ? `${venue.address?.line1 || ''}, ${venue.city?.name || ''}`
     : 'N/A';
 
-  const classifications = Array.isArray(event?.classifications)
-    ? event.classifications
-    : [];
-
   const genresAndSegments = [
-    //avoid duplicates
-    ...new Set([
-      ...classifications.map(c => c?.genre?.name).filter(Boolean),
-      ...classifications.map(c => c?.segment?.name).filter(Boolean),
-    ]),
+    ...(event?.classifications?.map(c => c.genre?.name) || []),
+    ...(event?.classifications?.map(c => c.segment?.name) || []),
   ].join(', ');
 
   return (
@@ -78,39 +71,41 @@ const EventDetailsScreen = () => {
           <Text style={styles.backText}>{t('Back')}</Text>
         </View>
       </TouchableOpacity>
+      {event && (
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ImageSlider />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <ImageSlider />
+          <View style={styles.eventInfo}>
+            <Text style={styles.title}>{event?.name || 'Event Name'}</Text>
+            <Text style={styles.subTitle}>
+              {genresAndSegments || 'Event Type'}
+            </Text>
+          </View>
 
-        <View style={styles.eventInfo}>
-          <Text style={styles.title}>{event?.name || 'Event Name'}</Text>
-          <Text style={styles.subTitle}>
-            {genresAndSegments || 'Event Type'}
-          </Text>
-        </View>
+          <EventCard
+            logo={calendarRound}
+            title={formatDate(event?.dates?.start?.dateTime)}
+            description={formatYear(event?.dates?.start?.dateTime)}
+          />
+          <EventCard
+            logo={timeRound}
+            title={formatTime(event?.dates?.start?.dateTime)}
+            description={`Doors open at ${formatTime(
+              event?.dates?.access?.startDateTime ??
+                event?.dates?.start?.dateTime,
+            )}`}
+          />
+          <EventCard
+            logo={locationRound}
+            title={venue?.name || 'Venue'}
+            description={venueAddress}
+          />
 
-        <EventCard
-          logo={calendarRound}
-          title={formatDate(event?.dates?.access?.startDateTime)}
-          description={formatYear(event?.dates?.access?.startDateTime)}
-        />
-        <EventCard
-          logo={timeRound}
-          title={formatTime(event?.dates?.start?.dateTime)}
-          description={`Doors open at ${formatTime(
-            event?.dates?.access?.startDateTime,
-          )}`}
-        />
-        <EventCard
-          logo={locationRound}
-          title={venue?.name || 'Venue'}
-          description={venueAddress}
-        />
-
-        <EventDescription />
-        <MapsView />
-        <BookNow />
-      </ScrollView>
+          <EventDescription />
+          <MapsView />
+          <BookNow />
+        </ScrollView>
+      )}
     </View>
   );
 };

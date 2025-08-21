@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   events: [],
   favorites: [],
-  currentEvent: {},
+  currentEvent: null,
 };
 
 export const eventSlice = createSlice({
@@ -22,7 +22,7 @@ export const eventSlice = createSlice({
     cleanEvent: state => {
       state.events = [];
       state.favorites = [];
-      state.currentEvent = {};
+      state.currentEvent = null;
     },
   },
 });

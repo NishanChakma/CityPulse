@@ -10,17 +10,19 @@ const DEFAULT_IMAGES = [
 ];
 
 const ImageSlider = () => {
-  const event = useSelector(state => state.event.currentEvent);
+  const event = useSelector(state => state.event?.currentEvent);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Memoize images array to prevent unnecessary recalculations
   const images = useMemo(
     () =>
       event?.images?.length > 0
-        ? event.images.map(img => img.url)
-        : DEFAULT_IMAGES,
+        ? event.images.map(img => img?.url ?? DEFAULT_IMAGES)
+        : [DEFAULT_IMAGES],
     [event],
   );
+
+  if (event?.images?.length === 0) return null;
 
   return (
     <View style={styles.container}>
