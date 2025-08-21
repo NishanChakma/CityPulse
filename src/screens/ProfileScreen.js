@@ -40,7 +40,6 @@ const ProfileScreen = () => {
   };
 
   const handleRadio = e => {
-    ShowMessage('Future Scope', true);
     if (!e) {
       dispatch(setBiometric(false));
       return;
@@ -54,9 +53,12 @@ const ProfileScreen = () => {
           .createKeys('Confirm fingerprint')
           .then(async () => {
             dispatch(setBiometric(true));
-            // ShowMessage('Fingerprint saved successfully');
+            ShowMessage('Fingerprint saved successfully');
           })
-          .catch(e => console.error('error: ', e));
+          .catch(e => {
+            ShowMessage('Biometric cancelled', true);
+            console.error('error: ', e);
+          });
       }
     });
   };
