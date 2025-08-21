@@ -16,7 +16,9 @@ const ImageSlider = () => {
   // Memoize images array to prevent unnecessary recalculations
   const images = useMemo(
     () =>
-      event?.images?.length ? event.images.map(img => img.url) : DEFAULT_IMAGES,
+      event?.images?.length > 0
+        ? event.images.map(img => img.url)
+        : DEFAULT_IMAGES,
     [event],
   );
 
