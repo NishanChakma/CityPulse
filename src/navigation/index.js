@@ -14,6 +14,7 @@ import ShowMessage from '../hooks/ShowMessage';
 import i18n from '../hooks/LanguageHooks';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import { logoutAction } from '../store/slices/authSlice';
+import { cleanEvent } from '../store/slices/eventSlice';
 
 const Stack = createStackNavigator();
 const auth = getAuth();
@@ -52,10 +53,10 @@ const RootNavigation = () => {
         if (initializing) setInitializing(false);
         return;
       }
-
       if (isLoggedIn && isBiometricEnabled) {
         await authenticateWithBiometrics(firebaseUser);
       } else {
+        dispatch(cleanEvent());
         setUser(firebaseUser);
         if (initializing) setInitializing(false);
       }

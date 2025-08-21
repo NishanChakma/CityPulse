@@ -19,9 +19,15 @@ export const eventSlice = createSlice({
     setCurrentEvent: (state, action) => {
       state.currentEvent = action.payload;
     },
+    cleanEvent: state => {
+      state.events = [];
+      state.favorites = [];
+      state.currentEvent = {};
+    },
   },
 });
 
-export const { setEvents, setFavourite, setCurrentEvent } = eventSlice.actions;
+export const { setEvents, setFavourite, setCurrentEvent, cleanEvent } =
+  eventSlice.actions;
 
 export default eventSlice.reducer;
