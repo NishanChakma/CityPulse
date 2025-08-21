@@ -28,9 +28,7 @@ const EventCard = React.memo(({ item }) => {
 
   const handleDetails = useCallback(() => {
     dispatch(setCurrentEvent(item));
-    navigation.navigate(AppRoutes.HOMENAVIGATOR, {
-      screen: AppRoutes.EVENTDETAILSSCREEN,
-    });
+    navigation.navigate(AppRoutes.EVENTDETAILSSCREEN);
   }, [dispatch, item]);
 
   return (

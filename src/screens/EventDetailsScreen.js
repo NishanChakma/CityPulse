@@ -68,7 +68,10 @@ const EventDetailsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
         <View style={styles.backContent}>
           <Image source={back} style={styles.backIcon} />
           <Text style={styles.backText}>{t('Back')}</Text>
