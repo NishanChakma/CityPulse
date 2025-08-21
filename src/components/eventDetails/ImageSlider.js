@@ -17,8 +17,8 @@ const ImageSlider = () => {
   const images = useMemo(
     () =>
       event?.images?.length > 0
-        ? event.images.map(img => img.url)
-        : DEFAULT_IMAGES,
+        ? event.images.map(img => img.url ?? DEFAULT_IMAGES)
+        : [DEFAULT_IMAGES],
     [event],
   );
 
