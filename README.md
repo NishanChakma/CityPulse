@@ -4,7 +4,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 ⚠️ Biometric login is supported only on real devices. On emulators or simulators, biometric features and local storage persistence functions may not work properly. To fully test authentication and data persistence, please use a physical device.
 
-> Without Biometric login use [main](https://github.com/NishanChakma/CityPulse/tree/main) branch
+> Without Biometric login use [main](https://github.com/NishanChakma/CityPulse/tree/main) branch(recommended)
 > With Biometric login use [biometric-login]() branch
 
 # Getting Started
