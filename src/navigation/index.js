@@ -51,13 +51,10 @@ const RootNavigation = () => {
       if (!firebaseUser) {
         setUser(null);
         if (initializing) setInitializing(false);
-        return;
-      }
-      if (isLoggedIn && isBiometricEnabled) {
+      } else if (isLoggedIn && isBiometricEnabled) {
         await authenticateWithBiometrics(firebaseUser);
       } else {
-        dispatch(cleanEvent());
-        setUser(firebaseUser);
+        forceLogout();
         if (initializing) setInitializing(false);
       }
     },
@@ -88,7 +85,7 @@ const RootNavigation = () => {
 
   //  Force logout and notify user
   const forceLogout = async message => {
-    ShowMessage(message, true);
+    message && ShowMessage(message, true);
     await signOut(auth);
     dispatch(logoutAction());
     setUser(null);
