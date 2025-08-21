@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import bg from '../assets/bg.png';
 import men from '../assets/men.png';
@@ -46,9 +46,11 @@ const ProfileScreen = () => {
     }
     const rnBiometric = new ReactNativeBiometrics();
     rnBiometric.isSensorAvailable().then(({ available, biometryType }) => {
-      if (available && biometryType !== BiometryTypes.TouchID) {
-        ShowMessage('Touch ID not available on this device!');
-      } else {
+      const checker =
+        Platform.OS === 'android'
+          ? biometryType === BiometryTypes.Biometrics
+          : biometryType === BiometryTypes.TouchID;
+      if (available && checker) {
         rnBiometric
           .createKeys('Confirm fingerprint')
           .then(async () => {
@@ -59,6 +61,8 @@ const ProfileScreen = () => {
             ShowMessage('Biometric cancelled', true);
             console.error('error: ', e);
           });
+      } else {
+        ShowMessage('Touch ID not available on this device!');
       }
     });
   };
