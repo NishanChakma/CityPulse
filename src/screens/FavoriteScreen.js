@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 700,
     paddingBottom: 20,
-    paddingTop: 10,
+    paddingTop: 20,
   },
   noFav: {
     color: colors.primary,
