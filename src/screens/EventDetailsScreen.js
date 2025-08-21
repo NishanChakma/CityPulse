@@ -45,9 +45,10 @@ const EventDetailsScreen = () => {
   const event = useSelector(state => state.event?.currentEvent);
 
   // Helper functions
-  const formatDate = date => dayjs(date).format('dddd, MMMM D');
-  const formatYear = date => dayjs(date).format('YYYY');
-  const formatTime = date => dayjs.utc(date).format('h:mm A');
+  const formatDate = date =>
+    date ? dayjs(date).format('dddd, MMMM D') : 'N/A';
+  const formatYear = date => (date ? dayjs(date).format('YYYY') : 'N/A');
+  const formatTime = date => (date ? dayjs.utc(date).format('h:mm A') : 'N/A');
 
   const venue = event?._embedded?.venues?.[0];
   const venueAddress = venue
