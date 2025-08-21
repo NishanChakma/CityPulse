@@ -54,7 +54,8 @@ const RootNavigation = () => {
       } else if (isLoggedIn && isBiometricEnabled) {
         await authenticateWithBiometrics(firebaseUser);
       } else {
-        forceLogout();
+        setUser(firebaseUser);
+        dispatch(cleanEvent());
         if (initializing) setInitializing(false);
       }
     },
