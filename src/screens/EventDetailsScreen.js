@@ -42,7 +42,7 @@ const EventCard = ({ logo, title, description }) => (
 const EventDetailsScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const event = useSelector(state => state.event.currentEvent);
+  const event = useSelector(state => state.event?.currentEvent);
 
   // Helper functions
   const formatDate = date => dayjs(date).format('dddd, MMMM D');
@@ -51,12 +51,19 @@ const EventDetailsScreen = () => {
 
   const venue = event?._embedded?.venues?.[0];
   const venueAddress = venue
-    ? `${venue.address?.line1 || ''}, ${venue.city?.name || ''}`
+    ? `${venue?.address?.line1 || ''}, ${venue?.city?.name || ''}`
     : 'N/A';
 
+  const classifications = Array.isArray(event?.classifications)
+    ? event.classifications
+    : [];
+
   const genresAndSegments = [
-    ...(event?.classifications?.map(c => c.genre?.name) || []),
-    ...(event?.classifications?.map(c => c.segment?.name) || []),
+    //avoid duplicates
+    ...new Set([
+      ...classifications.map(c => c?.genre?.name).filter(Boolean),
+      ...classifications.map(c => c?.segment?.name).filter(Boolean),
+    ]),
   ].join(', ');
 
   return (
@@ -85,9 +92,9 @@ const EventDetailsScreen = () => {
         />
         <EventCard
           logo={timeRound}
-          title={formatTime(event?.dates?.access?.startDateTime)}
+          title={formatTime(event?.dates?.start?.dateTime)}
           description={`Doors open at ${formatTime(
-            event?.dates?.start?.dateTime,
+            event?.dates?.access?.startDateTime,
           )}`}
         />
         <EventCard
