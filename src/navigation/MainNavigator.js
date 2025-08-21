@@ -1,80 +1,24 @@
 import React from 'react';
-import { Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import AppRoutes from './AppRoutes';
-import HomeNavigator from './HomeNavigator';
-import ProfileScreen from '../screens/ProfileScreen';
-import FavoriteScreen from '../screens/FavoriteScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import EventDetailsScreen from '../screens/EventDetailsScreen';
+import TabNavigator from './TabNavigator';
 
-// Icons
-import HomeIcon from '../assets/home.png';
-import HomeIconActive from '../assets/homeActive.png';
-import UserIcon from '../assets/user.png';
-import UserIconActive from '../assets/userActive.png';
-import FavIcon from '../assets/fav.png';
-import FavIconActive from '../assets/red.png';
-
-const Tabs = createBottomTabNavigator();
-
-// Helper function for tab icons
-const getTabBarIcon = (routeName, focused) => {
-  const iconMapping = {
-    [AppRoutes.HOMENAVIGATOR]: {
-      active: HomeIconActive,
-      inactive: HomeIcon,
-      size: { width: 18, height: 18 },
-    },
-    [AppRoutes.FAVORITESCREEN]: {
-      active: FavIconActive,
-      inactive: FavIcon,
-      size: { width: 18, height: 20 },
-    },
-    [AppRoutes.PROFILESCREEN]: {
-      active: UserIconActive,
-      inactive: UserIcon,
-      size: { width: 18, height: 18 },
-    },
-  };
-
-  const { active, inactive, size } = iconMapping[routeName] || {};
-  return (
-    <Image
-      source={focused ? active : inactive}
-      style={size}
-      resizeMode="contain"
-    />
-  );
-};
+const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
-    <Tabs.Navigator
-      initialRouteName={AppRoutes.HOMENAVIGATOR}
-      screenOptions={({ route }) => ({
+    <Stack.Navigator
+      screenOptions={() => ({
         headerShown: false,
-        unmountOnBlur: true,
-        tabBarIcon: ({ focused }) => getTabBarIcon(route.name, focused),
-        tabBarActiveTintColor: '#D72638',
-        tabBarInactiveTintColor: '#999',
       })}
     >
-      <Tabs.Screen
-        name={AppRoutes.HOMENAVIGATOR}
-        component={HomeNavigator}
-        options={{ tabBarLabel: 'Home' }}
+      <Stack.Screen name={AppRoutes.TABNAVIGATOR} component={TabNavigator} />
+      <Stack.Screen
+        name={AppRoutes.EVENTDETAILSSCREEN}
+        component={EventDetailsScreen}
       />
-      <Tabs.Screen
-        name={AppRoutes.FAVORITESCREEN}
-        component={FavoriteScreen}
-        options={{ tabBarLabel: 'Favourite' }}
-      />
-      <Tabs.Screen
-        name={AppRoutes.PROFILESCREEN}
-        component={ProfileScreen}
-        options={{ tabBarLabel: 'Profile' }}
-      />
-    </Tabs.Navigator>
+    </Stack.Navigator>
   );
 };
 
