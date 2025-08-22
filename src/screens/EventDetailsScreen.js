@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     marginRight: 10,
-    overflow: 'hidden',
+    width: '100%',
   },
   cardLogo: {
     width: 42,
@@ -188,8 +188,9 @@ const styles = StyleSheet.create({
   },
   cardTextContainer: {
     paddingLeft: 10,
-    marginRight: 20,
+    paddingRight: 40,
     overflow: 'hidden',
+    width: '100%',
   },
   cardTitle: {
     fontSize: 14,
