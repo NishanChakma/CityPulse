@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   bookContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 50,
+    paddingBottom: 20,
   },
 });
 export default styles;

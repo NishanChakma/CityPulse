@@ -83,22 +83,30 @@ const EventDetailsScreen = () => {
         <ImageSlider />
 
         <View style={styles.eventInfo}>
-          <Text style={styles.title}>{event?.name || 'Event Name'}</Text>
+          <Text style={styles.title}>{event?.name ?? 'Event Name'}</Text>
           <Text style={styles.subTitle}>
-            {genresAndSegments || 'Event Type'}
+            {genresAndSegments ?? 'Event Type'}
           </Text>
         </View>
 
         <EventCard
           logo={calendarRound}
-          title={formatDate(event?.dates?.access?.startDateTime)}
-          description={formatYear(event?.dates?.access?.startDateTime)}
+          title={formatDate(
+            event?.dates?.start?.startDateTime ?? event?.dates?.start?.dateTime,
+          )}
+          description={formatYear(
+            event?.dates?.start?.startDateTime ?? event?.dates?.start?.dateTime,
+          )}
         />
         <EventCard
           logo={timeRound}
-          title={formatTime(event?.dates?.start?.dateTime)}
+          title={formatTime(
+            event?.dates?.start?.startDateTime ?? event?.dates?.start?.dateTime,
+          )}
           description={`Doors open at ${formatTime(
-            event?.dates?.access?.startDateTime,
+            event?.dates?.access?.startDateTime ??
+              event?.dates?.access?.dateTime ??
+              event?.dates?.start?.dateTime,
           )}`}
         />
         <EventCard
@@ -124,12 +132,16 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 20,
+    overflow: 'hidden',
   },
   backButton: {
     position: 'absolute',
-    top: 20,
-    left: 10,
+    top: 0,
+    left: 0,
+    right: 0,
     zIndex: 999,
+    height: 40,
+    backgroundColor: '#000',
   },
   backContent: {
     flexDirection: 'row',
@@ -148,6 +160,7 @@ const styles = StyleSheet.create({
   eventInfo: {
     paddingHorizontal: 10,
     paddingVertical: 10,
+    overflow: 'hidden',
   },
   title: {
     fontSize: 24,
@@ -166,6 +179,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     marginBottom: 10,
+    marginRight: 10,
+    overflow: 'hidden',
   },
   cardLogo: {
     width: 42,
@@ -173,6 +188,8 @@ const styles = StyleSheet.create({
   },
   cardTextContainer: {
     paddingLeft: 10,
+    marginRight: 20,
+    overflow: 'hidden',
   },
   cardTitle: {
     fontSize: 14,

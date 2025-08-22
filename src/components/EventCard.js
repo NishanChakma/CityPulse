@@ -54,8 +54,10 @@ const EventCard = React.memo(({ item }) => {
           <View style={styles.flex}>
             <Image source={calendar} style={styles.icon} />
             <Text style={styles.date} numberOfLines={1}>
-              {item?.dates?.start?.dateTime
-                ? dayjs(item.dates.start.dateTime).format('ddd, D MMM YYYY')
+              {item?.dates?.start?.startDateTime || item?.dates?.start?.dateTime
+                ? dayjs(
+                    item.dates.start.startDateTime ?? item.dates.start.dateTime,
+                  ).format('ddd, D MMM YYYY')
                 : 'Date TBA'}
             </Text>
           </View>
