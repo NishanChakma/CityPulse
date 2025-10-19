@@ -57,9 +57,9 @@ const ProfileScreen = () => {
             dispatch(setBiometric(true));
             ShowMessage('Fingerprint saved successfully');
           })
-          .catch(e => {
+          .catch(error => {
             ShowMessage('Biometric cancelled', true);
-            console.error('error: ', e);
+            console.error('error: ', error);
           });
       } else {
         ShowMessage('Touch ID not available on this device!');
