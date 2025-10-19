@@ -40,7 +40,10 @@ const ProfileScreen = () => {
   };
 
   const handleRadio = e => {
-    ShowMessage('Future Scope', true);
+    ShowMessage(
+      'Change the git branch to enable biometric login. And please make sure you have a fingerprint sensor on your device.',
+      true,
+    );
     if (!e) {
       dispatch(setBiometric(false));
       return;
@@ -56,7 +59,7 @@ const ProfileScreen = () => {
             dispatch(setBiometric(true));
             // ShowMessage('Fingerprint saved successfully');
           })
-          .catch(e => console.error('error: ', e));
+          .catch(error => console.error('error: ', error));
       }
     });
   };
