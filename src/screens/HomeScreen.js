@@ -5,12 +5,14 @@ import colors from '../utils/colors';
 import SearchView from '../components/SearchView';
 import EventList from '../components/EventList';
 import { useTranslation } from 'react-i18next';
+import ReanimatedHeadline from '../components/ReanimatedHeadline';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <Header />
+      <ReanimatedHeadline />
       <Text style={styles.text}>
         {t('discover')}{' '}
         <Text style={{ color: colors.primaryLight }}>{t('amazing')}</Text>
