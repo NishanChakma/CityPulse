@@ -55,6 +55,15 @@ Then, and every time you update your native dependencies, run:
 bundle exec pod install
 ```
 
+if already native deps update, run:
+```sh
+pod install 
+```
+or
+```sh
+pod install --repo-update
+```
+
 For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
 ```sh
@@ -92,6 +101,7 @@ You've successfully run and modified your React Native App. :partying_face:
 # Troubleshooting
 
 - Android: Make sure you have selected Settings > Build, Execution > Deployment > Build Tools > Gradle > zulu-17
+- IOS: pod install --repo-update
 
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
