@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import back from '../assets/back.png';
 import calendarRound from '../assets/calendarRound.png';
 import timeRound from '../assets/timeRound.png';
 import locationRound from '../assets/locationRound.png';
@@ -24,6 +16,7 @@ import MapsView from '../components/eventDetails/MapsView';
 import BookNow from '../components/eventDetails/BookNow';
 import ImageSlider from '../components/eventDetails/ImageSlider';
 import { useTranslation } from 'react-i18next';
+import BackButton from '../components/BackButton';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -40,8 +33,6 @@ const EventCard = ({ logo, title, description }) => (
 );
 
 const EventDetailsScreen = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
   const event = useSelector(state => state.event?.currentEvent);
 
   // Helper functions
@@ -69,15 +60,7 @@ const EventDetailsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <View style={styles.backContent}>
-          <Image source={back} style={styles.backIcon} />
-          <Text style={styles.backText}>{t('Back')}</Text>
-        </View>
-      </TouchableOpacity>
+      <BackButton />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <ImageSlider />

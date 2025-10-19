@@ -2,11 +2,13 @@ import { Text, View } from 'react-native';
 import React from 'react';
 import styles from './styles';
 import PrimaryButton from '../PrimaryButton';
-import ShowMessage from '../../hooks/ShowMessage';
 import bookNow from '../../assets/book.png';
 import { useTranslation } from 'react-i18next';
+import AppRoutes from '../../navigation/AppRoutes';
+import { useNavigation } from '@react-navigation/native';
 
 const BookNow = () => {
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const min = 20;
   const max = 60;
@@ -21,7 +23,11 @@ const BookNow = () => {
         </Text>
       </View>
       <PrimaryButton
-        onPress={() => ShowMessage('Future Scope')}
+        onPress={() =>
+          navigation.navigate(AppRoutes.PURCHASE_TICKET_SCREEN, {
+            price: randomNumber,
+          })
+        }
         title={t('BookNow')}
         logo={bookNow}
       />
